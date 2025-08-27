@@ -1,0 +1,11 @@
+# .env file
+# 이 파일에는 API 키와 같은 민감한 정보가 포함되므로 절대로 Git에 커밋하지 마세요.
+.env
+
+# Python virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
