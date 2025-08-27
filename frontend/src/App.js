@@ -1,8 +1,8 @@
 // frontend/src/App.js
 import React, { useState } from 'react';
 import DocQA from './components/DocQA';
-import DocQA from './components/Calculators.js';
-import DocQA from './components/Chat.js';
+import Calculators from './components/Calculators.js';
+import Chat from './components/Chat.js';
 // 다른 컴포넌트들도 import 하세요 (예: Chat.js, Calculators.js)
 import './App.css';
 
@@ -14,16 +14,16 @@ function App() {
       <header className="App-header">
         <h1>🔌 전기·전자 종합 어시스턴트</h1>
         <nav>
-          <button onClick={() => setActiveTab('chat')}>💬 전기 챗봇</button>
-          <button onClick={() => setActiveTab('doc-qa')}>📄 문서 기반 Q&A</button>
-          <button onClick={() => setActiveTab('calculator')}>🧮 공학 계산기</button>
+          <button className={activeTab === 'chat' ? 'active' : ''} onClick={() => setActiveTab('chat')}>💬 전기 챗봇</button>
+          <button className={activeTab === 'doc-qa' ? 'active' : ''} onClick={() => setActiveTab('doc-qa')}>📄 문서 기반 Q&A</button>
+          <button className={activeTab === 'calculator' ? 'active' : ''} onClick={() => setActiveTab('calculator')}>🧮 공학 계산기</button>
         </nav>
       </header>
       <main>
         {activeTab === 'doc-qa' && <DocQA />}
         {/* 다른 탭에 대한 컴포넌트 렌더링 */}
-        {activeTab === 'chat' && <div>전기 챗봇 기능이 여기에 구현됩니다.</div>}
-        {activeTab === 'calculator' && <div>공학 계산기 기능이 여기에 구현됩니다.</div>}
+        {activeTab === 'chat' && <Chat />}
+        {activeTab === 'calculator' && <Calculators />}
       </main>
     </div>
   );
