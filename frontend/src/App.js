@@ -1,6 +1,8 @@
 // frontend/src/App.js
 import React, { useState } from 'react';
 import DocQA from './components/DocQA';
+import DocQA from './components/Calculators.js';
+import DocQA from './components/Chat.js';
 // 다른 컴포넌트들도 import 하세요 (예: Chat.js, Calculators.js)
 import './App.css';
 
