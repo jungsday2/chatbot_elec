@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+langchain
+langchain-openai
+tiktoken
+pypdf
+faiss-cpu
+sympy
+schemdraw
+python-multipart
