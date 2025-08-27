@@ -31,7 +31,7 @@ pip install -r requirements.txt
 # 5. FastAPI 서버 실행
 uvicorn main:app --reload
 ```
-서버는 `http://127.0.0.1:8000` 에서 실행됩니다.
+서버는 `https://chatbot-elec.onrender.com` 에서 실행됩니다.
 
 ### 2. 프론트엔드 앱 실행
 
