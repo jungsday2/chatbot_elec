@@ -174,22 +174,41 @@ async def handle_doc_query(request: DocQueryRequest):
 
     chat_history = [HumanMessage(content=msg['content']) if msg['role'] == 'user' else AIMessage(content=msg['content']) for msg in request.history]
 
+    # ▼▼▼ [수정] 시스템 프롬프트를 훨씬 더 명확하고 구체적으로 변경 ▼▼▼
+    contextualize_q_system_prompt = (
+        "주어진 대화 기록과 사용자의 마지막 질문을 보고, 대화의 맥락을 참고해야만 이해할 수 있는 질문이라면, "
+        "대화 기록 없이도 이해할 수 있는 하나의 독립적인 질문으로 재구성해주세요. "
+        "질문에 답을 하려고 하지 마세요. 오직 질문을 재구성하는 역할만 수행합니다. 만약 질문을 재구성할 필요가 없다면, 원래 질문을 그대로 반환하세요."
+    )
     contextualize_q_prompt = ChatPromptTemplate.from_messages([
-        ("system", "Given a chat history and the latest user question, formulate a standalone question."),
+        ("system", contextualize_q_system_prompt),
         MessagesPlaceholder("chat_history"),
         ("human", "{input}"),
     ])
     history_aware_retriever = create_history_aware_retriever(llm_gen, retriever, contextualize_q_prompt)
     
-    qa_system_prompt = "Answer the user's question based on the below context. Answer in Korean:\n\n{context}"
-    qa_prompt = ChatPromptTemplate.from_messages([("system", qa_system_prompt), ("human", "{input}")])
+    # ▼▼▼ [수정] 답변 생성 프롬프트에 한국어 답변을 더 명확하게 지시 ▼▼▼
+    qa_system_prompt = """당신은 주어진 문맥을 바탕으로 질문에 답하는 Q&A 어시스턴트입니다. \
+    반드시 검색된 아래의 문맥을 사용하여 질문에 답해주세요. \
+    만약 문맥에서 답을 찾을 수 없다면, 아는 내용을 바탕으로 답하지 말고 반드시 '문맥에서 정보를 찾을 수 없습니다.'라고만 답변하세요. \
+    답변은 항상 한국어로, 세 문장 이내의 간결한 존댓말로 해주세요.
+
+    [문맥 정보]
+    {context}"""
+    
+    qa_prompt = ChatPromptTemplate.from_messages([
+        ("system", qa_system_prompt),
+        MessagesPlaceholder("chat_history"),
+        ("human", "{input}"),
+    ])
     question_answer_chain = create_stuff_documents_chain(llm_gen, qa_prompt)
     
     rag_chain = create_retrieval_chain(history_aware_retriever, question_answer_chain)
     
+    # 체인 호출 방식은 기존과 동일하게 유지
     response = await rag_chain.ainvoke({"input": request.message, "chat_history": chat_history})
     return {"answer": response["answer"]}
-
+    
 @app.post("/calculate/ohms")
 def calculate_ohms(req: OhmLawRequest):
     return ohms_law(req.V, req.I, req.R)
