@@ -1,104 +1,99 @@
+/* --- 1. Modern Sans 폰트 및 기본 스타일 --- */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  margin: 0;
+  font-family: 'Inter', 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f4f7f6;
-  color: #333;
+  background-color: #f8f9fa; /* 배경색 변경 */
+  color: #212529; /* 기본 글자색 */
+}
+
+/* --- 2. 대시보드 레이아웃 시스템 --- */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  background-color: #ffffff;
+  border-right: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.sidebar-header {
+  padding-bottom: 24px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.sidebar-header h1 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1864ab; /* 포인트 컬러 */
   margin: 0;
 }
 
-.App {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.App-header {
-  text-align: center;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 1rem;
-}
-
-.App-header h1 {
-  color: #007bff;
-  font-size: 2.5em;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.App-header p {
-  color: #555;
-  font-size: 1.1em;
-}
-
-nav {
+.sidebar-nav {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 1rem;
+  flex-direction: column;
+  gap: 8px;
 }
 
-nav button {
-  padding: 10px 20px;
+.main-content {
+  flex-grow: 1;
+  padding: 32px;
+  overflow-y: auto; /* 콘텐츠가 길어지면 스크롤 */
+}
+
+/* --- 3. Rounded Soft 컴포넌트 및 인터랙션 --- */
+.sidebar-nav button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  padding: 14px 18px;
   font-size: 1rem;
-  font-weight: 600;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  background-color: #f0f0f0;
+  font-weight: 500;
+  border: none;
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  background-color: transparent;
+  color: #495057;
+  transition: all 0.2s ease-out; /* Scale Transform 인터랙션 */
 }
 
-nav button:hover {
-  background-color: #e0e0e0;
+.sidebar-nav button:hover {
+  background-color: #f1f3f5;
+  transform: scale(1.02);
 }
 
-nav button.active {
-  background-color: #007bff;
+.sidebar-nav button.active {
+  background-color: #1c7ed6;
   color: white;
-  border-color: #0056b3;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(28, 126, 214, 0.25);
 }
 
-main {
-  padding: 1rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* General Component Styles */
+/* --- 4. 범용 컴포넌트 스타일 --- */
 h3 {
-  color: #0056b3;
-  border-bottom: 2px solid #007bff;
-  padding-bottom: 8px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #343a40;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 12px;
   margin-top: 0;
-}
-
-input[type="text"], input[type="number"], input[type="file"], button, select {
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin: 5px;
+  margin-bottom: 24px;
 }
 
 button {
-  background-color: #28a745;
-  color: white;
-  border: none;
   cursor: pointer;
-  transition: background-color 0.2s;
 }
-
-button:hover {
-  background-color: #218838;
-}
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
