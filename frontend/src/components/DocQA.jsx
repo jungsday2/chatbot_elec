@@ -49,22 +49,26 @@ const DocQA = () => {
     }
 
     const userMessage = { role: 'user', content: currentMessage };
-    const newMessages = [...messages, userMessage];
-    setMessages(newMessages);
+    // ▼▼▼ [수정] 함수형 업데이트로 변경 ▼▼▼
+    setMessages(prevMessages => [...prevMessages, userMessage]);
+    const messageToSend = currentMessage; // 현재 메시지 값을 변수에 저장
     setCurrentMessage('');
     setIsLoading(true);
 
     try {
       const response = await axios.post(`${API_URL}/docs/query`, {
         session_id: sessionId,
-        message: currentMessage,
-        history: messages, // 이전 대화 기록 전송
+        // ▼▼▼ [수정] API 요청 시 최신 대화 기록을 보내도록 수정 ▼▼▼
+        message: messageToSend,
+        history: [...messages, userMessage], // API에는 직전 메시지까지 포함하여 전송
       });
       const assistantMessage = { role: 'assistant', content: response.data.answer };
-      setMessages([...newMessages, assistantMessage]);
+      // ▼▼▼ [수정] 함수형 업데이트로 변경 ▼▼▼
+      setMessages(prevMessages => [...prevMessages, assistantMessage]);
     } catch (error) {
       const errorMessage = { role: 'assistant', content: `오류: ${error.response?.data?.detail || error.message}` };
-      setMessages([...newMessages, errorMessage]);
+      // ▼▼▼ [수정] 함수형 업데이트로 변경 ▼▼▼
+      setMessages(prevMessages => [...prevMessages, errorMessage]);
     } finally {
       setIsLoading(false);
     }
