@@ -42,32 +42,38 @@ const DocQA = () => {
     }
   };
 
-  const handleSendMessage = async () => {
+const handleSendMessage = async () => {
     if (!currentMessage.trim() || !sessionId) {
       alert('질문을 입력하거나 문서를 먼저 업로드해주세요.');
       return;
     }
 
     const userMessage = { role: 'user', content: currentMessage };
-    // ▼▼▼ [수정] 함수형 업데이트로 변경 ▼▼▼
+
+    // 1. 화면 업데이트는 함수형으로 예약합니다.
     setMessages(prevMessages => [...prevMessages, userMessage]);
-    const messageToSend = currentMessage; // 현재 메시지 값을 변수에 저장
+
+    // 2. API로 보낼 대화 기록은 현재 시점의 messages와 방금 추가한 userMessage를 합쳐서 만듭니다.
+    const updatedHistory = [...messages, userMessage];
+
+    const messageToSend = currentMessage;
     setCurrentMessage('');
     setIsLoading(true);
 
     try {
       const response = await axios.post(`${API_URL}/docs/query`, {
         session_id: sessionId,
-        // ▼▼▼ [수정] API 요청 시 최신 대화 기록을 보내도록 수정 ▼▼▼
         message: messageToSend,
-        history: [...messages, userMessage], // API에는 직전 메시지까지 포함하여 전송
+        history: updatedHistory, // 3. 최신 기록이 담긴 배열을 전송합니다.
       });
+
       const assistantMessage = { role: 'assistant', content: response.data.answer };
-      // ▼▼▼ [수정] 함수형 업데이트로 변경 ▼▼▼
+
+      // 4. AI 답변 또한 함수형 업데이트를 사용해 추가합니다.
       setMessages(prevMessages => [...prevMessages, assistantMessage]);
+      
     } catch (error) {
       const errorMessage = { role: 'assistant', content: `오류: ${error.response?.data?.detail || error.message}` };
-      // ▼▼▼ [수정] 함수형 업데이트로 변경 ▼▼▼
       setMessages(prevMessages => [...prevMessages, errorMessage]);
     } finally {
       setIsLoading(false);
