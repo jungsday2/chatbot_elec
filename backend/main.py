@@ -61,10 +61,10 @@ class OhmLawRequest(BaseModel):
     R: float | None = None
 
 class RlcRequest(BaseModel):
-    R: float | None = 0.0
-    L: float | None = 0.0
-    C: float | None = 0.0
-    f: float | None = 60.0
+    R: float | None = None
+    L: float | None = None
+    C: float | None = None
+    f: float | None = None
     mode: str
 
 # --- 세션 데이터 저장소 (RAG Retriever 관리) ---
@@ -197,14 +197,20 @@ def calculate_ohms(req: OhmLawRequest):
 @app.post("/calculate/rlc")
 def calculate_rlc(req: RlcRequest):
     try:
+        # ▼▼▼ [수정] 입력값이 None일 경우 기본값을 사용하도록 수정 ▼▼▼
+        f = req.f if req.f is not None and req.f > 0 else 60.0
+        R = req.R if req.R is not None else 0.0
+        L = req.L if req.L is not None else 0.0
+        C = req.C if req.C is not None else 0.0
+        
         if req.mode == "직렬":
-            return impedance_rlc_series(req.R, req.L, req.C, req.f)
+            return impedance_rlc_series(R, L, C, f)
         elif req.mode == "병렬":
-            return impedance_rlc_parallel(req.R, req.L, req.C, req.f)
+            return impedance_rlc_parallel(req.R, req.L, req.C, f) # 병렬 함수는 None을 그대로 전달
         else:
-            raise HTTPException(400, "mode는 '직렬' 또는 '병렬'이어야 합니다.")
+            raise HTTPException(status_code=400, detail="mode는 '직렬' 또는 '병렬'이어야 합니다.")
     except Exception as e:
-        raise HTTPException(500, str(e))
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
