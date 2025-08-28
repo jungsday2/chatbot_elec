@@ -47,11 +47,12 @@ const Calculators = () => {
     setIsLoading(true);
     setRlcResult(null);
     try {
+      // ▼▼▼ [수정] 빈 문자열일 경우 null을 보내도록 수정 ▼▼▼
       const params = {
-        R: parseFloat(rlcState.R),
-        L: parseFloat(rlcState.L),
-        C: parseFloat(rlcState.C),
-        f: parseFloat(rlcState.f),
+        R: rlcState.R ? parseFloat(rlcState.R) : null,
+        L: rlcState.L ? parseFloat(rlcState.L) : null,
+        C: rlcState.C ? parseFloat(rlcState.C) : null,
+        f: rlcState.f ? parseFloat(rlcState.f) : null,
         mode: rlcState.mode,
       };
       const response = await axios.post(`${API_URL}/calculate/rlc`, params);
