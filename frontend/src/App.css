@@ -6,98 +6,68 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f9fa; /* 배경색 변경 */
-  color: #212529; /* 기본 글자색 */
-  line-height: 1.6; /* 행간 추가 */
+  background-color: #f9fafb; /* 이미지와 유사한 배경색 */
+  color: #374151;
+  line-height: 1.6;
 }
 
-/* --- 2. 대시보드 레이아웃 시스템 --- */
+/* --- 2. 새로운 상단 네비게이션 레이아웃 --- */
 .app-container {
-  display: flex;
-  max-width: 1200px; /* 컨테이너 최대 너비 */
-  margin: 0 auto; /* 중앙 정렬 */
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-.sidebar {
-  width: 280px; /* 고정 너비 */
-  flex-shrink: 0; /* 사이드바 너비 고정 */
-  background-color: #ffffff;
-  border-right: 1px solid #dee2e6;
-  display: flex;
-  flex-direction: column;
-  padding: 24px;
-  box-sizing: border-box;
+.app-header {
+  text-align: center;
+  padding: 48px 0;
 }
 
-.sidebar-header {
-  padding-bottom: 24px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid #f1f3f5;
-}
-
-.sidebar-header h1 {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #1864ab; /* 포인트 컬러 */
+.app-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111827;
   margin: 0;
 }
 
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.main-content {
-  flex-grow: 1;
-  padding: 24px; /* 패딩 수정 */
-  overflow-y: auto; /* 콘텐츠가 길어지면 스크롤 */
-}
-
-/* --- 3. Rounded Soft 컴포넌트 및 인터랙션 --- */
-.sidebar-nav button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  text-align: left;
-  padding: 14px 18px;
+.app-header p {
   font-size: 1rem;
-  font-weight: 500;
-  border: none;
-  border-radius: 12px; /* 모서리 둥글게 */
-  cursor: pointer;
-  background-color: transparent;
-  color: #495057;
-  transition: all 0.2s ease-out; /* Scale Transform 인터랙션 */
+  color: #6b7280;
+  margin-top: 8px;
 }
 
-.sidebar-nav button:hover {
-  background-color: #f1f3f5;
-  transform: scale(1.02); /* 호버 시 확대 */
-}
-
-.sidebar-nav button.active {
-  background-color: #1c7ed6;
-  color: white;
-  font-weight: 600;
-  box-shadow: 0 4px 12px rgba(28, 126, 214, 0.25); /* 그림자 효과 */
-}
-
-/* --- 4. 범용 컴포넌트 스타일 --- */
-h3 {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #343a40;
-  border-bottom: 2px solid #e9ecef;
-  padding-bottom: 12px;
-  margin-top: 0;
+.app-nav {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #e5e7eb;
   margin-bottom: 24px;
 }
 
-button {
+.app-nav button {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  background-color: transparent;
   cursor: pointer;
+  color: #6b7280;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease-out;
+}
+
+.app-nav button:hover {
+  color: #3b82f6;
+}
+
+.app-nav button.active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+}
+
+.main-content {
+  padding: 16px;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  min-height: 60vh;
 }
