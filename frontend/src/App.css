@@ -8,18 +8,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #f8f9fa; /* 배경색 변경 */
   color: #212529; /* 기본 글자색 */
+  line-height: 1.6; /* 행간 추가 */
 }
 
 /* --- 2. 대시보드 레이아웃 시스템 --- */
 .app-container {
   display: flex;
+  max-width: 1200px; /* 컨테이너 최대 너비 */
+  margin: 0 auto; /* 중앙 정렬 */
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
 }
 
 .sidebar {
-  width: 280px;
+  width: 280px; /* 고정 너비 */
+  flex-shrink: 0; /* 사이드바 너비 고정 */
   background-color: #ffffff;
   border-right: 1px solid #dee2e6;
   display: flex;
@@ -49,7 +53,7 @@ body {
 
 .main-content {
   flex-grow: 1;
-  padding: 32px;
+  padding: 24px; /* 패딩 수정 */
   overflow-y: auto; /* 콘텐츠가 길어지면 스크롤 */
 }
 
@@ -64,7 +68,7 @@ body {
   font-size: 1rem;
   font-weight: 500;
   border: none;
-  border-radius: 12px;
+  border-radius: 12px; /* 모서리 둥글게 */
   cursor: pointer;
   background-color: transparent;
   color: #495057;
@@ -73,14 +77,14 @@ body {
 
 .sidebar-nav button:hover {
   background-color: #f1f3f5;
-  transform: scale(1.02);
+  transform: scale(1.02); /* 호버 시 확대 */
 }
 
 .sidebar-nav button.active {
   background-color: #1c7ed6;
   color: white;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(28, 126, 214, 0.25);
+  box-shadow: 0 4px 12px rgba(28, 126, 214, 0.25); /* 그림자 효과 */
 }
 
 /* --- 4. 범용 컴포넌트 스타일 --- */
